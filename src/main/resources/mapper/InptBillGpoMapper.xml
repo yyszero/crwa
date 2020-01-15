@@ -1,0 +1,1374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sinopharm.craw.dao.InptBillGpoMapper" >
+  <resultMap id="BaseResultMap" type="com.sinopharm.craw.entity.FsDto" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="orderDetailId" property="orderDetailId" jdbcType="VARCHAR" />
+    <result column="orderId" property="orderId" jdbcType="VARCHAR" />
+    <result column="orderName" property="orderName" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+    <result column="hospitalName" property="hospitalName" jdbcType="VARCHAR" />
+    <result column="submitTime" property="submitTime" jdbcType="TIMESTAMP" />
+    <result column="purchaseCount" property="purchaseCount" jdbcType="DECIMAL" />
+    <result column="purchasePrice" property="purchasePrice" jdbcType="DECIMAL" />
+    <result column="purchaseAmount" property="purchaseAmount" jdbcType="DECIMAL" />
+    <result column="goodsId" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="medicineModel" property="medicineModel" jdbcType="VARCHAR" />
+    <result column="outLook" property="outLook" jdbcType="VARCHAR" />
+    <result column="Unit" property="Unit" jdbcType="VARCHAR" />
+    <result column="MATERIALNAME" property="MATERIALNAME" jdbcType="VARCHAR" />
+    <result column="sourceName_1" property="sourceName_1" jdbcType="VARCHAR" />
+    <result column="companyNameSc" property="companyNameSc" jdbcType="VARCHAR" />
+    <result column="sourceName" property="sourceName" jdbcType="VARCHAR" />
+    <result column="detailDistributeAddress" property="detailDistributeAddress" jdbcType="VARCHAR" />
+    <result column="isExpire" property="isExpire" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="COMPANYNAMEPS" property="COMPANYNAMEPS" jdbcType="VARCHAR" />
+    <result column="CREATEDATE" property="CREATEDATE" jdbcType="TIMESTAMP" />
+    <result column="Status" property="Status" jdbcType="VARCHAR" />
+    <result column="FAILUREREASON" property="FAILUREREASON" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ORDERREMARKS, TOTALDETAILCOUNT, ORDERDETAILID, ORDERID, CONTRACTID, ADDRESSID, 
+    PROCURECATALOGID, GOODSID, PRODUCTNAME, PRODUCTSPELNAME, PRODUCTWBNAME, GOODSNAME, 
+    MEDICINEMODEL, OUTLOOK, FACTOR, MATERIALNAME, UNIT, MINUNIT, COMPANYNAMESC, SPLITCOMPANYNAME, 
+    TRUSTCOMPANYNAME, COMPANYIDTB, COMPANYNAMETB, MIDDLEPACK, MAXPACK, ISBASEDRUG, QUALITYLEVEL, 
+    PURCHASETYPE, SOURCEID, SOURCENAME, BIDPRICE, USINGRANG, HOSPITALID, HOSPITALNAME, 
+    HOSPITALDEPARTMENTID, HOSPITALDEPARTMENTNAME, ADMINAREAIDSTATISTICSDRUG, ADMINAREANAMEDRUG, 
+    ADMINAREAIDDRUG, BELONGORGNAME, ORDERTYPE, ORDERNAME, SUBMITTIME, FILINGID, COMPANYIDPS, 
+    COMPANYNAMEPS, PURCHASEPRICE, PURCHASECOUNT, PURCHASEAMOUNT, ISREAD, READUSERID, 
+    READUSERNAME, READTIME, CONFIRMUSERID, CONFIRMUSERNAME, CONFIRMTIME, ORDERDETAILSTATE, 
+    REFUSEREASON, DETAILDISTRIBUTEADDRESS, TOTALDISTRIBUTECOUNT, TOTALDISTRIBUTEAMOUNT, 
+    TOTALWAREHOUSECOUNT, TOTALWAREHOUSEAMOUNT, TOTALRETURNAMOUNT, TOTALRETURNCOUNT, ISUSING, 
+    DEALREASON, ADDUSERID, ADDUSERNAME, ADDTIME, LASTUPDATEUSERID, LASTUPDATEUSERNAME, 
+    LASTUPDATETIME, ISLONGFILING, GOODDATASTR, SUMPURCHASEAMOUNT, ALLCOUNT, ORDERCUSTOMINFO, 
+    GOODSNUMBER, AFTERLINKAGEPRICE, MEDICAREPAYMENTPRICE, HOSPITALORDERDETAILID, CREATEDATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sinopharm.craw.entity.InptBillGpoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from INPT_BILL_GPO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    from INPT_BILL_GPO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from INPT_BILL_GPO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sinopharm.craw.entity.InptBillGpoExample" >
+    delete from INPT_BILL_GPO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sinopharm.craw.entity.FsDto" >
+    insert into INPT_BILL_GPO_NEW (ID, orderDetailId, orderId,
+      orderName, areaName, hospitalName,
+      submitTime, purchaseCount, purchasePrice,
+      purchaseAmount, goodsId, goodsName,
+      productName, medicineModel, outLook,
+      Unit, MATERIALNAME, sourceName_1,
+      companyNameSc, sourceName, detailDistributeAddress,
+      isExpire, remark, COMPANYNAMEPS,
+      CREATEDATE, Status, FAILUREREASON
+     )
+    values (seq_inpt_bill_gpo.nextval, #{orderDetailId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},
+      #{orderName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{hospitalName,jdbcType=VARCHAR},
+      #{submitTime,jdbcType=TIMESTAMP}, #{purchaseCount,jdbcType=DECIMAL}, #{purchasePrice,jdbcType=DECIMAL},
+      #{purchaseAmount,jdbcType=DECIMAL}, #{goodsId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
+      #{productName,jdbcType=VARCHAR}, #{medicineModel,jdbcType=VARCHAR}, #{outLook,jdbcType=VARCHAR},
+      #{Unit,jdbcType=VARCHAR}, #{MATERIALNAME,jdbcType=VARCHAR}, #{sourceName_1,jdbcType=VARCHAR},
+      #{companyNameSc,jdbcType=VARCHAR}, #{sourceName,jdbcType=VARCHAR}, #{detailDistributeAddress,jdbcType=VARCHAR},
+      #{isExpire,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{COMPANYNAMEPS,jdbcType=VARCHAR},
+      #{CREATEDATE,jdbcType=TIMESTAMP}, #{Status,jdbcType=VARCHAR}, #{FAILUREREASON,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sinopharm.craw.entity.InptBillGpo" >
+    insert into INPT_BILL_GPO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orderremarks != null" >
+        ORDERREMARKS,
+      </if>
+      <if test="totaldetailcount != null" >
+        TOTALDETAILCOUNT,
+      </if>
+      <if test="orderdetailid != null" >
+        ORDERDETAILID,
+      </if>
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="contractid != null" >
+        CONTRACTID,
+      </if>
+      <if test="addressid != null" >
+        ADDRESSID,
+      </if>
+      <if test="procurecatalogid != null" >
+        PROCURECATALOGID,
+      </if>
+      <if test="goodsid != null" >
+        GOODSID,
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME,
+      </if>
+      <if test="productspelname != null" >
+        PRODUCTSPELNAME,
+      </if>
+      <if test="productwbname != null" >
+        PRODUCTWBNAME,
+      </if>
+      <if test="goodsname != null" >
+        GOODSNAME,
+      </if>
+      <if test="medicinemodel != null" >
+        MEDICINEMODEL,
+      </if>
+      <if test="outlook != null" >
+        OUTLOOK,
+      </if>
+      <if test="factor != null" >
+        FACTOR,
+      </if>
+      <if test="materialname != null" >
+        MATERIALNAME,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+      <if test="minunit != null" >
+        MINUNIT,
+      </if>
+      <if test="companynamesc != null" >
+        COMPANYNAMESC,
+      </if>
+      <if test="splitcompanyname != null" >
+        SPLITCOMPANYNAME,
+      </if>
+      <if test="trustcompanyname != null" >
+        TRUSTCOMPANYNAME,
+      </if>
+      <if test="companyidtb != null" >
+        COMPANYIDTB,
+      </if>
+      <if test="companynametb != null" >
+        COMPANYNAMETB,
+      </if>
+      <if test="middlepack != null" >
+        MIDDLEPACK,
+      </if>
+      <if test="maxpack != null" >
+        MAXPACK,
+      </if>
+      <if test="isbasedrug != null" >
+        ISBASEDRUG,
+      </if>
+      <if test="qualitylevel != null" >
+        QUALITYLEVEL,
+      </if>
+      <if test="purchasetype != null" >
+        PURCHASETYPE,
+      </if>
+      <if test="sourceid != null" >
+        SOURCEID,
+      </if>
+      <if test="sourcename != null" >
+        SOURCENAME,
+      </if>
+      <if test="bidprice != null" >
+        BIDPRICE,
+      </if>
+      <if test="usingrang != null" >
+        USINGRANG,
+      </if>
+      <if test="hospitalid != null" >
+        HOSPITALID,
+      </if>
+      <if test="hospitalname != null" >
+        HOSPITALNAME,
+      </if>
+      <if test="hospitaldepartmentid != null" >
+        HOSPITALDEPARTMENTID,
+      </if>
+      <if test="hospitaldepartmentname != null" >
+        HOSPITALDEPARTMENTNAME,
+      </if>
+      <if test="adminareaidstatisticsdrug != null" >
+        ADMINAREAIDSTATISTICSDRUG,
+      </if>
+      <if test="adminareanamedrug != null" >
+        ADMINAREANAMEDRUG,
+      </if>
+      <if test="adminareaiddrug != null" >
+        ADMINAREAIDDRUG,
+      </if>
+      <if test="belongorgname != null" >
+        BELONGORGNAME,
+      </if>
+      <if test="ordertype != null" >
+        ORDERTYPE,
+      </if>
+      <if test="ordername != null" >
+        ORDERNAME,
+      </if>
+      <if test="submittime != null" >
+        SUBMITTIME,
+      </if>
+      <if test="filingid != null" >
+        FILINGID,
+      </if>
+      <if test="companyidps != null" >
+        COMPANYIDPS,
+      </if>
+      <if test="companynameps != null" >
+        COMPANYNAMEPS,
+      </if>
+      <if test="purchaseprice != null" >
+        PURCHASEPRICE,
+      </if>
+      <if test="purchasecount != null" >
+        PURCHASECOUNT,
+      </if>
+      <if test="purchaseamount != null" >
+        PURCHASEAMOUNT,
+      </if>
+      <if test="isread != null" >
+        ISREAD,
+      </if>
+      <if test="readuserid != null" >
+        READUSERID,
+      </if>
+      <if test="readusername != null" >
+        READUSERNAME,
+      </if>
+      <if test="readtime != null" >
+        READTIME,
+      </if>
+      <if test="confirmuserid != null" >
+        CONFIRMUSERID,
+      </if>
+      <if test="confirmusername != null" >
+        CONFIRMUSERNAME,
+      </if>
+      <if test="confirmtime != null" >
+        CONFIRMTIME,
+      </if>
+      <if test="orderdetailstate != null" >
+        ORDERDETAILSTATE,
+      </if>
+      <if test="refusereason != null" >
+        REFUSEREASON,
+      </if>
+      <if test="detaildistributeaddress != null" >
+        DETAILDISTRIBUTEADDRESS,
+      </if>
+      <if test="totaldistributecount != null" >
+        TOTALDISTRIBUTECOUNT,
+      </if>
+      <if test="totaldistributeamount != null" >
+        TOTALDISTRIBUTEAMOUNT,
+      </if>
+      <if test="totalwarehousecount != null" >
+        TOTALWAREHOUSECOUNT,
+      </if>
+      <if test="totalwarehouseamount != null" >
+        TOTALWAREHOUSEAMOUNT,
+      </if>
+      <if test="totalreturnamount != null" >
+        TOTALRETURNAMOUNT,
+      </if>
+      <if test="totalreturncount != null" >
+        TOTALRETURNCOUNT,
+      </if>
+      <if test="isusing != null" >
+        ISUSING,
+      </if>
+      <if test="dealreason != null" >
+        DEALREASON,
+      </if>
+      <if test="adduserid != null" >
+        ADDUSERID,
+      </if>
+      <if test="addusername != null" >
+        ADDUSERNAME,
+      </if>
+      <if test="addtime != null" >
+        ADDTIME,
+      </if>
+      <if test="lastupdateuserid != null" >
+        LASTUPDATEUSERID,
+      </if>
+      <if test="lastupdateusername != null" >
+        LASTUPDATEUSERNAME,
+      </if>
+      <if test="lastupdatetime != null" >
+        LASTUPDATETIME,
+      </if>
+      <if test="islongfiling != null" >
+        ISLONGFILING,
+      </if>
+      <if test="gooddatastr != null" >
+        GOODDATASTR,
+      </if>
+      <if test="sumpurchaseamount != null" >
+        SUMPURCHASEAMOUNT,
+      </if>
+      <if test="allcount != null" >
+        ALLCOUNT,
+      </if>
+      <if test="ordercustominfo != null" >
+        ORDERCUSTOMINFO,
+      </if>
+      <if test="goodsnumber != null" >
+        GOODSNUMBER,
+      </if>
+      <if test="afterlinkageprice != null" >
+        AFTERLINKAGEPRICE,
+      </if>
+      <if test="medicarepaymentprice != null" >
+        MEDICAREPAYMENTPRICE,
+      </if>
+      <if test="hospitalorderdetailid != null" >
+        HOSPITALORDERDETAILID,
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="orderremarks != null" >
+        #{orderremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldetailcount != null" >
+        #{totaldetailcount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderdetailid != null" >
+        #{orderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="contractid != null" >
+        #{contractid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null" >
+        #{addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="procurecatalogid != null" >
+        #{procurecatalogid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productspelname != null" >
+        #{productspelname,jdbcType=VARCHAR},
+      </if>
+      <if test="productwbname != null" >
+        #{productwbname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="medicinemodel != null" >
+        #{medicinemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="outlook != null" >
+        #{outlook,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null" >
+        #{factor,jdbcType=VARCHAR},
+      </if>
+      <if test="materialname != null" >
+        #{materialname,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="minunit != null" >
+        #{minunit,jdbcType=VARCHAR},
+      </if>
+      <if test="companynamesc != null" >
+        #{companynamesc,jdbcType=VARCHAR},
+      </if>
+      <if test="splitcompanyname != null" >
+        #{splitcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="trustcompanyname != null" >
+        #{trustcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyidtb != null" >
+        #{companyidtb,jdbcType=VARCHAR},
+      </if>
+      <if test="companynametb != null" >
+        #{companynametb,jdbcType=VARCHAR},
+      </if>
+      <if test="middlepack != null" >
+        #{middlepack,jdbcType=VARCHAR},
+      </if>
+      <if test="maxpack != null" >
+        #{maxpack,jdbcType=VARCHAR},
+      </if>
+      <if test="isbasedrug != null" >
+        #{isbasedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="qualitylevel != null" >
+        #{qualitylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasetype != null" >
+        #{purchasetype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceid != null" >
+        #{sourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcename != null" >
+        #{sourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="bidprice != null" >
+        #{bidprice,jdbcType=VARCHAR},
+      </if>
+      <if test="usingrang != null" >
+        #{usingrang,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        #{hospitalid,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalname != null" >
+        #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitaldepartmentid != null" >
+        #{hospitaldepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitaldepartmentname != null" >
+        #{hospitaldepartmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareaidstatisticsdrug != null" >
+        #{adminareaidstatisticsdrug,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareanamedrug != null" >
+        #{adminareanamedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareaiddrug != null" >
+        #{adminareaiddrug,jdbcType=VARCHAR},
+      </if>
+      <if test="belongorgname != null" >
+        #{belongorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null" >
+        #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="ordername != null" >
+        #{ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="submittime != null" >
+        #{submittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filingid != null" >
+        #{filingid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyidps != null" >
+        #{companyidps,jdbcType=VARCHAR},
+      </if>
+      <if test="companynameps != null" >
+        #{companynameps,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null" >
+        #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasecount != null" >
+        #{purchasecount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseamount != null" >
+        #{purchaseamount,jdbcType=DECIMAL},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=VARCHAR},
+      </if>
+      <if test="readuserid != null" >
+        #{readuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="readusername != null" >
+        #{readusername,jdbcType=VARCHAR},
+      </if>
+      <if test="readtime != null" >
+        #{readtime,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmuserid != null" >
+        #{confirmuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmusername != null" >
+        #{confirmusername,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtime != null" >
+        #{confirmtime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdetailstate != null" >
+        #{orderdetailstate,jdbcType=VARCHAR},
+      </if>
+      <if test="refusereason != null" >
+        #{refusereason,jdbcType=VARCHAR},
+      </if>
+      <if test="detaildistributeaddress != null" >
+        #{detaildistributeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldistributecount != null" >
+        #{totaldistributecount,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldistributeamount != null" >
+        #{totaldistributeamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalwarehousecount != null" >
+        #{totalwarehousecount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalwarehouseamount != null" >
+        #{totalwarehouseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalreturnamount != null" >
+        #{totalreturnamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalreturncount != null" >
+        #{totalreturncount,jdbcType=VARCHAR},
+      </if>
+      <if test="isusing != null" >
+        #{isusing,jdbcType=VARCHAR},
+      </if>
+      <if test="dealreason != null" >
+        #{dealreason,jdbcType=VARCHAR},
+      </if>
+      <if test="adduserid != null" >
+        #{adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="addusername != null" >
+        #{addusername,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdateuserid != null" >
+        #{lastupdateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdateusername != null" >
+        #{lastupdateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null" >
+        #{lastupdatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="islongfiling != null" >
+        #{islongfiling,jdbcType=VARCHAR},
+      </if>
+      <if test="gooddatastr != null" >
+        #{gooddatastr,jdbcType=VARCHAR},
+      </if>
+      <if test="sumpurchaseamount != null" >
+        #{sumpurchaseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="allcount != null" >
+        #{allcount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercustominfo != null" >
+        #{ordercustominfo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsnumber != null" >
+        #{goodsnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="afterlinkageprice != null" >
+        #{afterlinkageprice,jdbcType=VARCHAR},
+      </if>
+      <if test="medicarepaymentprice != null" >
+        #{medicarepaymentprice,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalorderdetailid != null" >
+        #{hospitalorderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sinopharm.craw.entity.InptBillGpoExample" resultType="java.lang.Integer" >
+    select count(*) from INPT_BILL_GPO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update INPT_BILL_GPO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderremarks != null" >
+        ORDERREMARKS = #{record.orderremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totaldetailcount != null" >
+        TOTALDETAILCOUNT = #{record.totaldetailcount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderdetailid != null" >
+        ORDERDETAILID = #{record.orderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractid != null" >
+        CONTRACTID = #{record.contractid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressid != null" >
+        ADDRESSID = #{record.addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.procurecatalogid != null" >
+        PROCURECATALOGID = #{record.procurecatalogid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null" >
+        GOODSID = #{record.goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        PRODUCTNAME = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productspelname != null" >
+        PRODUCTSPELNAME = #{record.productspelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productwbname != null" >
+        PRODUCTWBNAME = #{record.productwbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsname != null" >
+        GOODSNAME = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicinemodel != null" >
+        MEDICINEMODEL = #{record.medicinemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outlook != null" >
+        OUTLOOK = #{record.outlook,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factor != null" >
+        FACTOR = #{record.factor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialname != null" >
+        MATERIALNAME = #{record.materialname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minunit != null" >
+        MINUNIT = #{record.minunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companynamesc != null" >
+        COMPANYNAMESC = #{record.companynamesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.splitcompanyname != null" >
+        SPLITCOMPANYNAME = #{record.splitcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trustcompanyname != null" >
+        TRUSTCOMPANYNAME = #{record.trustcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyidtb != null" >
+        COMPANYIDTB = #{record.companyidtb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companynametb != null" >
+        COMPANYNAMETB = #{record.companynametb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.middlepack != null" >
+        MIDDLEPACK = #{record.middlepack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxpack != null" >
+        MAXPACK = #{record.maxpack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbasedrug != null" >
+        ISBASEDRUG = #{record.isbasedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualitylevel != null" >
+        QUALITYLEVEL = #{record.qualitylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchasetype != null" >
+        PURCHASETYPE = #{record.purchasetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceid != null" >
+        SOURCEID = #{record.sourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourcename != null" >
+        SOURCENAME = #{record.sourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bidprice != null" >
+        BIDPRICE = #{record.bidprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usingrang != null" >
+        USINGRANG = #{record.usingrang,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalid != null" >
+        HOSPITALID = #{record.hospitalid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalname != null" >
+        HOSPITALNAME = #{record.hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitaldepartmentid != null" >
+        HOSPITALDEPARTMENTID = #{record.hospitaldepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitaldepartmentname != null" >
+        HOSPITALDEPARTMENTNAME = #{record.hospitaldepartmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminareaidstatisticsdrug != null" >
+        ADMINAREAIDSTATISTICSDRUG = #{record.adminareaidstatisticsdrug,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminareanamedrug != null" >
+        ADMINAREANAMEDRUG = #{record.adminareanamedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminareaiddrug != null" >
+        ADMINAREAIDDRUG = #{record.adminareaiddrug,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongorgname != null" >
+        BELONGORGNAME = #{record.belongorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordertype != null" >
+        ORDERTYPE = #{record.ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordername != null" >
+        ORDERNAME = #{record.ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submittime != null" >
+        SUBMITTIME = #{record.submittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.filingid != null" >
+        FILINGID = #{record.filingid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyidps != null" >
+        COMPANYIDPS = #{record.companyidps,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companynameps != null" >
+        COMPANYNAMEPS = #{record.companynameps,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseprice != null" >
+        PURCHASEPRICE = #{record.purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchasecount != null" >
+        PURCHASECOUNT = #{record.purchasecount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseamount != null" >
+        PURCHASEAMOUNT = #{record.purchaseamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isread != null" >
+        ISREAD = #{record.isread,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readuserid != null" >
+        READUSERID = #{record.readuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readusername != null" >
+        READUSERNAME = #{record.readusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readtime != null" >
+        READTIME = #{record.readtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmuserid != null" >
+        CONFIRMUSERID = #{record.confirmuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmusername != null" >
+        CONFIRMUSERNAME = #{record.confirmusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmtime != null" >
+        CONFIRMTIME = #{record.confirmtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderdetailstate != null" >
+        ORDERDETAILSTATE = #{record.orderdetailstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refusereason != null" >
+        REFUSEREASON = #{record.refusereason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detaildistributeaddress != null" >
+        DETAILDISTRIBUTEADDRESS = #{record.detaildistributeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totaldistributecount != null" >
+        TOTALDISTRIBUTECOUNT = #{record.totaldistributecount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totaldistributeamount != null" >
+        TOTALDISTRIBUTEAMOUNT = #{record.totaldistributeamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalwarehousecount != null" >
+        TOTALWAREHOUSECOUNT = #{record.totalwarehousecount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalwarehouseamount != null" >
+        TOTALWAREHOUSEAMOUNT = #{record.totalwarehouseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalreturnamount != null" >
+        TOTALRETURNAMOUNT = #{record.totalreturnamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalreturncount != null" >
+        TOTALRETURNCOUNT = #{record.totalreturncount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isusing != null" >
+        ISUSING = #{record.isusing,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealreason != null" >
+        DEALREASON = #{record.dealreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adduserid != null" >
+        ADDUSERID = #{record.adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addusername != null" >
+        ADDUSERNAME = #{record.addusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        ADDTIME = #{record.addtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastupdateuserid != null" >
+        LASTUPDATEUSERID = #{record.lastupdateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastupdateusername != null" >
+        LASTUPDATEUSERNAME = #{record.lastupdateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastupdatetime != null" >
+        LASTUPDATETIME = #{record.lastupdatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.islongfiling != null" >
+        ISLONGFILING = #{record.islongfiling,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gooddatastr != null" >
+        GOODDATASTR = #{record.gooddatastr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumpurchaseamount != null" >
+        SUMPURCHASEAMOUNT = #{record.sumpurchaseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allcount != null" >
+        ALLCOUNT = #{record.allcount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordercustominfo != null" >
+        ORDERCUSTOMINFO = #{record.ordercustominfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsnumber != null" >
+        GOODSNUMBER = #{record.goodsnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afterlinkageprice != null" >
+        AFTERLINKAGEPRICE = #{record.afterlinkageprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicarepaymentprice != null" >
+        MEDICAREPAYMENTPRICE = #{record.medicarepaymentprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalorderdetailid != null" >
+        HOSPITALORDERDETAILID = #{record.hospitalorderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdate != null" >
+        CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update INPT_BILL_GPO
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ORDERREMARKS = #{record.orderremarks,jdbcType=VARCHAR},
+      TOTALDETAILCOUNT = #{record.totaldetailcount,jdbcType=DECIMAL},
+      ORDERDETAILID = #{record.orderdetailid,jdbcType=VARCHAR},
+      ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      CONTRACTID = #{record.contractid,jdbcType=VARCHAR},
+      ADDRESSID = #{record.addressid,jdbcType=VARCHAR},
+      PROCURECATALOGID = #{record.procurecatalogid,jdbcType=VARCHAR},
+      GOODSID = #{record.goodsid,jdbcType=VARCHAR},
+      PRODUCTNAME = #{record.productname,jdbcType=VARCHAR},
+      PRODUCTSPELNAME = #{record.productspelname,jdbcType=VARCHAR},
+      PRODUCTWBNAME = #{record.productwbname,jdbcType=VARCHAR},
+      GOODSNAME = #{record.goodsname,jdbcType=VARCHAR},
+      MEDICINEMODEL = #{record.medicinemodel,jdbcType=VARCHAR},
+      OUTLOOK = #{record.outlook,jdbcType=VARCHAR},
+      FACTOR = #{record.factor,jdbcType=VARCHAR},
+      MATERIALNAME = #{record.materialname,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      MINUNIT = #{record.minunit,jdbcType=VARCHAR},
+      COMPANYNAMESC = #{record.companynamesc,jdbcType=VARCHAR},
+      SPLITCOMPANYNAME = #{record.splitcompanyname,jdbcType=VARCHAR},
+      TRUSTCOMPANYNAME = #{record.trustcompanyname,jdbcType=VARCHAR},
+      COMPANYIDTB = #{record.companyidtb,jdbcType=VARCHAR},
+      COMPANYNAMETB = #{record.companynametb,jdbcType=VARCHAR},
+      MIDDLEPACK = #{record.middlepack,jdbcType=VARCHAR},
+      MAXPACK = #{record.maxpack,jdbcType=VARCHAR},
+      ISBASEDRUG = #{record.isbasedrug,jdbcType=VARCHAR},
+      QUALITYLEVEL = #{record.qualitylevel,jdbcType=VARCHAR},
+      PURCHASETYPE = #{record.purchasetype,jdbcType=VARCHAR},
+      SOURCEID = #{record.sourceid,jdbcType=VARCHAR},
+      SOURCENAME = #{record.sourcename,jdbcType=VARCHAR},
+      BIDPRICE = #{record.bidprice,jdbcType=VARCHAR},
+      USINGRANG = #{record.usingrang,jdbcType=VARCHAR},
+      HOSPITALID = #{record.hospitalid,jdbcType=VARCHAR},
+      HOSPITALNAME = #{record.hospitalname,jdbcType=VARCHAR},
+      HOSPITALDEPARTMENTID = #{record.hospitaldepartmentid,jdbcType=VARCHAR},
+      HOSPITALDEPARTMENTNAME = #{record.hospitaldepartmentname,jdbcType=VARCHAR},
+      ADMINAREAIDSTATISTICSDRUG = #{record.adminareaidstatisticsdrug,jdbcType=VARCHAR},
+      ADMINAREANAMEDRUG = #{record.adminareanamedrug,jdbcType=VARCHAR},
+      ADMINAREAIDDRUG = #{record.adminareaiddrug,jdbcType=VARCHAR},
+      BELONGORGNAME = #{record.belongorgname,jdbcType=VARCHAR},
+      ORDERTYPE = #{record.ordertype,jdbcType=VARCHAR},
+      ORDERNAME = #{record.ordername,jdbcType=VARCHAR},
+      SUBMITTIME = #{record.submittime,jdbcType=TIMESTAMP},
+      FILINGID = #{record.filingid,jdbcType=VARCHAR},
+      COMPANYIDPS = #{record.companyidps,jdbcType=VARCHAR},
+      COMPANYNAMEPS = #{record.companynameps,jdbcType=VARCHAR},
+      PURCHASEPRICE = #{record.purchaseprice,jdbcType=DECIMAL},
+      PURCHASECOUNT = #{record.purchasecount,jdbcType=DECIMAL},
+      PURCHASEAMOUNT = #{record.purchaseamount,jdbcType=DECIMAL},
+      ISREAD = #{record.isread,jdbcType=VARCHAR},
+      READUSERID = #{record.readuserid,jdbcType=VARCHAR},
+      READUSERNAME = #{record.readusername,jdbcType=VARCHAR},
+      READTIME = #{record.readtime,jdbcType=VARCHAR},
+      CONFIRMUSERID = #{record.confirmuserid,jdbcType=VARCHAR},
+      CONFIRMUSERNAME = #{record.confirmusername,jdbcType=VARCHAR},
+      CONFIRMTIME = #{record.confirmtime,jdbcType=VARCHAR},
+      ORDERDETAILSTATE = #{record.orderdetailstate,jdbcType=VARCHAR},
+      REFUSEREASON = #{record.refusereason,jdbcType=VARCHAR},
+      DETAILDISTRIBUTEADDRESS = #{record.detaildistributeaddress,jdbcType=VARCHAR},
+      TOTALDISTRIBUTECOUNT = #{record.totaldistributecount,jdbcType=VARCHAR},
+      TOTALDISTRIBUTEAMOUNT = #{record.totaldistributeamount,jdbcType=VARCHAR},
+      TOTALWAREHOUSECOUNT = #{record.totalwarehousecount,jdbcType=VARCHAR},
+      TOTALWAREHOUSEAMOUNT = #{record.totalwarehouseamount,jdbcType=VARCHAR},
+      TOTALRETURNAMOUNT = #{record.totalreturnamount,jdbcType=VARCHAR},
+      TOTALRETURNCOUNT = #{record.totalreturncount,jdbcType=VARCHAR},
+      ISUSING = #{record.isusing,jdbcType=VARCHAR},
+      DEALREASON = #{record.dealreason,jdbcType=VARCHAR},
+      ADDUSERID = #{record.adduserid,jdbcType=VARCHAR},
+      ADDUSERNAME = #{record.addusername,jdbcType=VARCHAR},
+      ADDTIME = #{record.addtime,jdbcType=VARCHAR},
+      LASTUPDATEUSERID = #{record.lastupdateuserid,jdbcType=VARCHAR},
+      LASTUPDATEUSERNAME = #{record.lastupdateusername,jdbcType=VARCHAR},
+      LASTUPDATETIME = #{record.lastupdatetime,jdbcType=VARCHAR},
+      ISLONGFILING = #{record.islongfiling,jdbcType=VARCHAR},
+      GOODDATASTR = #{record.gooddatastr,jdbcType=VARCHAR},
+      SUMPURCHASEAMOUNT = #{record.sumpurchaseamount,jdbcType=VARCHAR},
+      ALLCOUNT = #{record.allcount,jdbcType=VARCHAR},
+      ORDERCUSTOMINFO = #{record.ordercustominfo,jdbcType=VARCHAR},
+      GOODSNUMBER = #{record.goodsnumber,jdbcType=VARCHAR},
+      AFTERLINKAGEPRICE = #{record.afterlinkageprice,jdbcType=VARCHAR},
+      MEDICAREPAYMENTPRICE = #{record.medicarepaymentprice,jdbcType=VARCHAR},
+      HOSPITALORDERDETAILID = #{record.hospitalorderdetailid,jdbcType=VARCHAR},
+      CREATEDATE = #{record.createdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sinopharm.craw.entity.InptBillGpo" >
+    update INPT_BILL_GPO
+    <set >
+      <if test="orderremarks != null" >
+        ORDERREMARKS = #{orderremarks,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldetailcount != null" >
+        TOTALDETAILCOUNT = #{totaldetailcount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderdetailid != null" >
+        ORDERDETAILID = #{orderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="contractid != null" >
+        CONTRACTID = #{contractid,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null" >
+        ADDRESSID = #{addressid,jdbcType=VARCHAR},
+      </if>
+      <if test="procurecatalogid != null" >
+        PROCURECATALOGID = #{procurecatalogid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        GOODSID = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productspelname != null" >
+        PRODUCTSPELNAME = #{productspelname,jdbcType=VARCHAR},
+      </if>
+      <if test="productwbname != null" >
+        PRODUCTWBNAME = #{productwbname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        GOODSNAME = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="medicinemodel != null" >
+        MEDICINEMODEL = #{medicinemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="outlook != null" >
+        OUTLOOK = #{outlook,jdbcType=VARCHAR},
+      </if>
+      <if test="factor != null" >
+        FACTOR = #{factor,jdbcType=VARCHAR},
+      </if>
+      <if test="materialname != null" >
+        MATERIALNAME = #{materialname,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="minunit != null" >
+        MINUNIT = #{minunit,jdbcType=VARCHAR},
+      </if>
+      <if test="companynamesc != null" >
+        COMPANYNAMESC = #{companynamesc,jdbcType=VARCHAR},
+      </if>
+      <if test="splitcompanyname != null" >
+        SPLITCOMPANYNAME = #{splitcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="trustcompanyname != null" >
+        TRUSTCOMPANYNAME = #{trustcompanyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyidtb != null" >
+        COMPANYIDTB = #{companyidtb,jdbcType=VARCHAR},
+      </if>
+      <if test="companynametb != null" >
+        COMPANYNAMETB = #{companynametb,jdbcType=VARCHAR},
+      </if>
+      <if test="middlepack != null" >
+        MIDDLEPACK = #{middlepack,jdbcType=VARCHAR},
+      </if>
+      <if test="maxpack != null" >
+        MAXPACK = #{maxpack,jdbcType=VARCHAR},
+      </if>
+      <if test="isbasedrug != null" >
+        ISBASEDRUG = #{isbasedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="qualitylevel != null" >
+        QUALITYLEVEL = #{qualitylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasetype != null" >
+        PURCHASETYPE = #{purchasetype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceid != null" >
+        SOURCEID = #{sourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcename != null" >
+        SOURCENAME = #{sourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="bidprice != null" >
+        BIDPRICE = #{bidprice,jdbcType=VARCHAR},
+      </if>
+      <if test="usingrang != null" >
+        USINGRANG = #{usingrang,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalid != null" >
+        HOSPITALID = #{hospitalid,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalname != null" >
+        HOSPITALNAME = #{hospitalname,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitaldepartmentid != null" >
+        HOSPITALDEPARTMENTID = #{hospitaldepartmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitaldepartmentname != null" >
+        HOSPITALDEPARTMENTNAME = #{hospitaldepartmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareaidstatisticsdrug != null" >
+        ADMINAREAIDSTATISTICSDRUG = #{adminareaidstatisticsdrug,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareanamedrug != null" >
+        ADMINAREANAMEDRUG = #{adminareanamedrug,jdbcType=VARCHAR},
+      </if>
+      <if test="adminareaiddrug != null" >
+        ADMINAREAIDDRUG = #{adminareaiddrug,jdbcType=VARCHAR},
+      </if>
+      <if test="belongorgname != null" >
+        BELONGORGNAME = #{belongorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null" >
+        ORDERTYPE = #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="ordername != null" >
+        ORDERNAME = #{ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="submittime != null" >
+        SUBMITTIME = #{submittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filingid != null" >
+        FILINGID = #{filingid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyidps != null" >
+        COMPANYIDPS = #{companyidps,jdbcType=VARCHAR},
+      </if>
+      <if test="companynameps != null" >
+        COMPANYNAMEPS = #{companynameps,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null" >
+        PURCHASEPRICE = #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasecount != null" >
+        PURCHASECOUNT = #{purchasecount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseamount != null" >
+        PURCHASEAMOUNT = #{purchaseamount,jdbcType=DECIMAL},
+      </if>
+      <if test="isread != null" >
+        ISREAD = #{isread,jdbcType=VARCHAR},
+      </if>
+      <if test="readuserid != null" >
+        READUSERID = #{readuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="readusername != null" >
+        READUSERNAME = #{readusername,jdbcType=VARCHAR},
+      </if>
+      <if test="readtime != null" >
+        READTIME = #{readtime,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmuserid != null" >
+        CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmusername != null" >
+        CONFIRMUSERNAME = #{confirmusername,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtime != null" >
+        CONFIRMTIME = #{confirmtime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdetailstate != null" >
+        ORDERDETAILSTATE = #{orderdetailstate,jdbcType=VARCHAR},
+      </if>
+      <if test="refusereason != null" >
+        REFUSEREASON = #{refusereason,jdbcType=VARCHAR},
+      </if>
+      <if test="detaildistributeaddress != null" >
+        DETAILDISTRIBUTEADDRESS = #{detaildistributeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldistributecount != null" >
+        TOTALDISTRIBUTECOUNT = #{totaldistributecount,jdbcType=VARCHAR},
+      </if>
+      <if test="totaldistributeamount != null" >
+        TOTALDISTRIBUTEAMOUNT = #{totaldistributeamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalwarehousecount != null" >
+        TOTALWAREHOUSECOUNT = #{totalwarehousecount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalwarehouseamount != null" >
+        TOTALWAREHOUSEAMOUNT = #{totalwarehouseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalreturnamount != null" >
+        TOTALRETURNAMOUNT = #{totalreturnamount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalreturncount != null" >
+        TOTALRETURNCOUNT = #{totalreturncount,jdbcType=VARCHAR},
+      </if>
+      <if test="isusing != null" >
+        ISUSING = #{isusing,jdbcType=VARCHAR},
+      </if>
+      <if test="dealreason != null" >
+        DEALREASON = #{dealreason,jdbcType=VARCHAR},
+      </if>
+      <if test="adduserid != null" >
+        ADDUSERID = #{adduserid,jdbcType=VARCHAR},
+      </if>
+      <if test="addusername != null" >
+        ADDUSERNAME = #{addusername,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        ADDTIME = #{addtime,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdateuserid != null" >
+        LASTUPDATEUSERID = #{lastupdateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdateusername != null" >
+        LASTUPDATEUSERNAME = #{lastupdateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null" >
+        LASTUPDATETIME = #{lastupdatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="islongfiling != null" >
+        ISLONGFILING = #{islongfiling,jdbcType=VARCHAR},
+      </if>
+      <if test="gooddatastr != null" >
+        GOODDATASTR = #{gooddatastr,jdbcType=VARCHAR},
+      </if>
+      <if test="sumpurchaseamount != null" >
+        SUMPURCHASEAMOUNT = #{sumpurchaseamount,jdbcType=VARCHAR},
+      </if>
+      <if test="allcount != null" >
+        ALLCOUNT = #{allcount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercustominfo != null" >
+        ORDERCUSTOMINFO = #{ordercustominfo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsnumber != null" >
+        GOODSNUMBER = #{goodsnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="afterlinkageprice != null" >
+        AFTERLINKAGEPRICE = #{afterlinkageprice,jdbcType=VARCHAR},
+      </if>
+      <if test="medicarepaymentprice != null" >
+        MEDICAREPAYMENTPRICE = #{medicarepaymentprice,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalorderdetailid != null" >
+        HOSPITALORDERDETAILID = #{hospitalorderdetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sinopharm.craw.entity.InptBillGpo" >
+    update INPT_BILL_GPO
+    set ORDERREMARKS = #{orderremarks,jdbcType=VARCHAR},
+      TOTALDETAILCOUNT = #{totaldetailcount,jdbcType=DECIMAL},
+      ORDERDETAILID = #{orderdetailid,jdbcType=VARCHAR},
+      ORDERID = #{orderid,jdbcType=VARCHAR},
+      CONTRACTID = #{contractid,jdbcType=VARCHAR},
+      ADDRESSID = #{addressid,jdbcType=VARCHAR},
+      PROCURECATALOGID = #{procurecatalogid,jdbcType=VARCHAR},
+      GOODSID = #{goodsid,jdbcType=VARCHAR},
+      PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      PRODUCTSPELNAME = #{productspelname,jdbcType=VARCHAR},
+      PRODUCTWBNAME = #{productwbname,jdbcType=VARCHAR},
+      GOODSNAME = #{goodsname,jdbcType=VARCHAR},
+      MEDICINEMODEL = #{medicinemodel,jdbcType=VARCHAR},
+      OUTLOOK = #{outlook,jdbcType=VARCHAR},
+      FACTOR = #{factor,jdbcType=VARCHAR},
+      MATERIALNAME = #{materialname,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      MINUNIT = #{minunit,jdbcType=VARCHAR},
+      COMPANYNAMESC = #{companynamesc,jdbcType=VARCHAR},
+      SPLITCOMPANYNAME = #{splitcompanyname,jdbcType=VARCHAR},
+      TRUSTCOMPANYNAME = #{trustcompanyname,jdbcType=VARCHAR},
+      COMPANYIDTB = #{companyidtb,jdbcType=VARCHAR},
+      COMPANYNAMETB = #{companynametb,jdbcType=VARCHAR},
+      MIDDLEPACK = #{middlepack,jdbcType=VARCHAR},
+      MAXPACK = #{maxpack,jdbcType=VARCHAR},
+      ISBASEDRUG = #{isbasedrug,jdbcType=VARCHAR},
+      QUALITYLEVEL = #{qualitylevel,jdbcType=VARCHAR},
+      PURCHASETYPE = #{purchasetype,jdbcType=VARCHAR},
+      SOURCEID = #{sourceid,jdbcType=VARCHAR},
+      SOURCENAME = #{sourcename,jdbcType=VARCHAR},
+      BIDPRICE = #{bidprice,jdbcType=VARCHAR},
+      USINGRANG = #{usingrang,jdbcType=VARCHAR},
+      HOSPITALID = #{hospitalid,jdbcType=VARCHAR},
+      HOSPITALNAME = #{hospitalname,jdbcType=VARCHAR},
+      HOSPITALDEPARTMENTID = #{hospitaldepartmentid,jdbcType=VARCHAR},
+      HOSPITALDEPARTMENTNAME = #{hospitaldepartmentname,jdbcType=VARCHAR},
+      ADMINAREAIDSTATISTICSDRUG = #{adminareaidstatisticsdrug,jdbcType=VARCHAR},
+      ADMINAREANAMEDRUG = #{adminareanamedrug,jdbcType=VARCHAR},
+      ADMINAREAIDDRUG = #{adminareaiddrug,jdbcType=VARCHAR},
+      BELONGORGNAME = #{belongorgname,jdbcType=VARCHAR},
+      ORDERTYPE = #{ordertype,jdbcType=VARCHAR},
+      ORDERNAME = #{ordername,jdbcType=VARCHAR},
+      SUBMITTIME = #{submittime,jdbcType=TIMESTAMP},
+      FILINGID = #{filingid,jdbcType=VARCHAR},
+      COMPANYIDPS = #{companyidps,jdbcType=VARCHAR},
+      COMPANYNAMEPS = #{companynameps,jdbcType=VARCHAR},
+      PURCHASEPRICE = #{purchaseprice,jdbcType=DECIMAL},
+      PURCHASECOUNT = #{purchasecount,jdbcType=DECIMAL},
+      PURCHASEAMOUNT = #{purchaseamount,jdbcType=DECIMAL},
+      ISREAD = #{isread,jdbcType=VARCHAR},
+      READUSERID = #{readuserid,jdbcType=VARCHAR},
+      READUSERNAME = #{readusername,jdbcType=VARCHAR},
+      READTIME = #{readtime,jdbcType=VARCHAR},
+      CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR},
+      CONFIRMUSERNAME = #{confirmusername,jdbcType=VARCHAR},
+      CONFIRMTIME = #{confirmtime,jdbcType=VARCHAR},
+      ORDERDETAILSTATE = #{orderdetailstate,jdbcType=VARCHAR},
+      REFUSEREASON = #{refusereason,jdbcType=VARCHAR},
+      DETAILDISTRIBUTEADDRESS = #{detaildistributeaddress,jdbcType=VARCHAR},
+      TOTALDISTRIBUTECOUNT = #{totaldistributecount,jdbcType=VARCHAR},
+      TOTALDISTRIBUTEAMOUNT = #{totaldistributeamount,jdbcType=VARCHAR},
+      TOTALWAREHOUSECOUNT = #{totalwarehousecount,jdbcType=VARCHAR},
+      TOTALWAREHOUSEAMOUNT = #{totalwarehouseamount,jdbcType=VARCHAR},
+      TOTALRETURNAMOUNT = #{totalreturnamount,jdbcType=VARCHAR},
+      TOTALRETURNCOUNT = #{totalreturncount,jdbcType=VARCHAR},
+      ISUSING = #{isusing,jdbcType=VARCHAR},
+      DEALREASON = #{dealreason,jdbcType=VARCHAR},
+      ADDUSERID = #{adduserid,jdbcType=VARCHAR},
+      ADDUSERNAME = #{addusername,jdbcType=VARCHAR},
+      ADDTIME = #{addtime,jdbcType=VARCHAR},
+      LASTUPDATEUSERID = #{lastupdateuserid,jdbcType=VARCHAR},
+      LASTUPDATEUSERNAME = #{lastupdateusername,jdbcType=VARCHAR},
+      LASTUPDATETIME = #{lastupdatetime,jdbcType=VARCHAR},
+      ISLONGFILING = #{islongfiling,jdbcType=VARCHAR},
+      GOODDATASTR = #{gooddatastr,jdbcType=VARCHAR},
+      SUMPURCHASEAMOUNT = #{sumpurchaseamount,jdbcType=VARCHAR},
+      ALLCOUNT = #{allcount,jdbcType=VARCHAR},
+      ORDERCUSTOMINFO = #{ordercustominfo,jdbcType=VARCHAR},
+      GOODSNUMBER = #{goodsnumber,jdbcType=VARCHAR},
+      AFTERLINKAGEPRICE = #{afterlinkageprice,jdbcType=VARCHAR},
+      MEDICAREPAYMENTPRICE = #{medicarepaymentprice,jdbcType=VARCHAR},
+      HOSPITALORDERDETAILID = #{hospitalorderdetailid,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="callProduce" statementType="CALLABLE">
+    call CMS_GEN.INPT_BILL_GPO_EXE_NEW(
+    #{ai_rtd,mode=OUT,jdbcType=INTEGER},
+    #{as_rmsg,mode=OUT,jdbcType=NVARCHAR}
+    )
+  </select>
+</mapper>
